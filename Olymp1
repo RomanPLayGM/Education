@@ -1,0 +1,6 @@
+x = int(input())
+y = int(input())
+xy = x * 60 + y
+xy = xy % (24 * 60 * 60)
+h = xy // 3600
+print(h)

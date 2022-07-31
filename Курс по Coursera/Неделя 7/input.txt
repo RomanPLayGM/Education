@@ -1,0 +1,3 @@
+Party 1n 100000
+Party 2n 200000
+Party 3n 400000
