@@ -34,9 +34,7 @@ i изменений.
 3
 """
 from functools import reduce
-import requests
 
-requests.get()
 
 class Multiset:
     def __init__(self, line):
