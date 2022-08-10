@@ -16,9 +16,27 @@
 Формат выходных:
 данных: В i-й строке выведите результат выполнения операции xor для всех чисел в мультимножестве Валеры после первых
 i изменений.
+
+Пример входных данных:
+5 5
+0 1 3 4 4
+1
+2 0
+1
+3 7
+3 6
+
+Пример выходных данных:
+7
+7
+5
+5
+3
 """
 from functools import reduce
+import requests
 
+requests.get()
 
 class Multiset:
     def __init__(self, line):
@@ -56,23 +74,68 @@ class Multiset:
             if self.multiset[key] > 0:
                 for i in range(self.multiset[key]):
                     multiset_list.append(key)
+        '''
+        for key in filter(lambda x: self.multiset[x] > 0, self.multiset):
+            for _ in range(self.multiset[key]):
+                multiset_list.append(key)
+        '''
+
         result = reduce(lambda x, y: x ^ y, multiset_list)
         return result
 
+    def _plus_one(self, _arg):
+        self.multiset = {key + 1: self.multiset[key] for key in self.multiset}
+
+    def _add_key(self, new_key):
+        new_key = int(new_key)
+        if self.multiset.get(new_key):
+            self.multiset[new_key] += 1
+        else:
+            self.multiset[new_key] = 1
+
+    def _minus_one(self, key):
+        key = int(key)
+        if self.multiset.get(key):
+            self.multiset[key] -= 1
+
+    def execute(self, request: list):
+        mapping = {
+            '1': self._plus_one,
+            '2': self._add_key,
+            '3': self._minus_one
+        }
+        type_ = request[0]
+        key = request[1] if len(request) > 1 else None
+
+        mapping[type_](key)
+
+
+# n, q = map(int, input().split())
+# string = input()
+# multiset = Multiset(string)
+# print(multiset.multiset)
+# result_xor = []
+# for _ in range(q):
+#     request = input().split()
+#     type_i = int(request[0])
+#     if type_i == 1:
+#         multiset.plus_one(1)
+#     elif type_i == 2:
+#         multiset.add_key(int(request[1]))
+#     else:
+#         multiset.minus_one(int(request[1]))
+#     result_xor.append(multiset.result())
+# print(*result_xor, sep="\n")
 
 n, q = map(int, input().split())
 string = input()
 multiset = Multiset(string)
 print(multiset.multiset)
 result_xor = []
-for j in range(q):
+for _ in range(q):
     request = input().split()
-    type_i = int(request[0])
-    if type_i == 1:
-        multiset.plus_one(1)
-    elif type_i == 2:
-        multiset.add_key(int(request[1]))
-    else:
-        multiset.minus_one(int(request[1]))
+
+    multiset.execute(request)
+
     result_xor.append(multiset.result())
 print(*result_xor, sep="\n")
