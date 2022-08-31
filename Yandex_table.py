@@ -113,7 +113,11 @@ with open("Test 2.txt", "r") as plane:
         result_games(result_game, second_points, first_points, string[2], string[0])
 count_team = len(number_of_points_scored_and_wins)
 max_len_string += 1
-sort_dict = sorted(list(result_game), key=str.lower)
+
+# sort_dict = sorted(list(result_game), key=str.lower)
+sort_dict = list(result_game)
+sort_dict.sort(key=str.lower)
+
 first_place = place_from_first_to_third(place)
 second_place = place_second_or_third(place, first_place)
 third_place = place_second_or_third(place, second_place)
